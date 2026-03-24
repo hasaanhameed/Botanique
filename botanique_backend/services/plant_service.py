@@ -17,19 +17,20 @@ async def fetch_plant_details(plant_name: str):
         return None # Fallback to dummy if key missing
 
     prompt = f"""
-    Provide professional gardening details for the plant: '{plant_name}'.
-    Return ONLY a JSON object with these keys:
-    - "description": a concise 2-sentence description.
-    - "water": specific watering needs (e.g., "Once a week", "Keep soil moist").
-    - "light": sunlight requirements (e.g., "Full sun", "Partial shade").
-    - "temperature": ideal temperature range (e.g., "15-25°C").
-    - "season": best growing season or when it blooms.
+    You are a professional botanist. Provide gardening details for the plant: '{plant_name}'.
+    Return ONLY a JSON object with strictly these keys:
+    - "description": a concise 2-sentence description of the plant.
+    - "water": clear watering instructions.
+    - "light": sunlight requirements.
+    - "temperature": ideal temperature range.
+    - "season": primary growth or blooming season.
     
-    Ensure the response is valid JSON and nothing else.
+    Response must be a single JSON object. Do not include any other text or markdown formatting like ```json.
     """
 
     async with httpx.AsyncClient() as client:
         try:
+            print(f"Calling Groq for {plant_name} using model llama-3.3-70b-versatile...")
             response = await client.post(
                 GROQ_API_URL,
                 headers={
@@ -39,18 +40,28 @@ async def fetch_plant_details(plant_name: str):
                 json={
                     "model": "llama-3.3-70b-versatile",
                     "messages": [{"role": "user", "content": prompt}],
+                    "temperature": 0.1,
                     "response_format": {"type": "json_object"}
                 },
                 timeout=30.0
             )
             
+            print(f"Groq Response Status: {response.status_code}")
+            
             if response.status_code == 200:
                 result = response.json()
-                content = result['choices'][0]['message']['content']
+                content = result['choices'][0]['message']['content'].strip()
+                
+                # Robust JSON extraction
+                if "{" in content:
+                    content = content[content.find("{"):content.rfind("}")+1]
+                
                 return json.loads(content)
-            return None
+            else:
+                print(f"Groq API Error Detail: {response.text}")
+                return None
         except Exception as e:
-            print(f"Groq API error: {e}")
+            print(f"Groq Service Exception: {e}")
             return None
 
 async def identify_plant(image: UploadFile):
