@@ -8,9 +8,3 @@ class UserSignUp(BaseModel):
 class UserSignIn(BaseModel):
     email: str
     password: str
-
-class UserResponse(BaseModel):
-    id: int
-    name: str
-    email: str
-    create_client: str

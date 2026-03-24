@@ -1,23 +1,37 @@
 from fastapi import APIRouter, status, HTTPException
-from schemas.user import UserResponse, UserSignUp, UserSignIn
+from schemas.user import UserSignUp, UserSignIn
 from database.database import supabase
-from hashing.hashing import hash_password
+from supabase_auth.errors import AuthApiError
 
 router = APIRouter(prefix="/user", tags=["User"])
 
-@router.post("/signup", response_model=UserResponse, status_code = status.HTTP_201_CREATED)
+@router.post("/signup", status_code=status.HTTP_201_CREATED)
 def signup(user: UserSignUp):
-    
-    isExisting = supabase.table("users").select("*").eq("email", user.email).execute()
-    if isExisting.data:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already exists")
-    
-    hashed_pw = hash_password(user.password)
-    new_user = supabase.table("users").insert({
-        "name": user.name,
-        "email": user.email,
-        "password": hashed_pw
-    }).execute()
+    try:
+        response = supabase.auth.sign_up({
+            "email": user.email,
+            "password": user.password,
+            "options": {"data": {"name": user.name}}
+        })
+    except AuthApiError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    return {"message": "User created successfully"}
+    if response.user is None:
+        raise HTTPException(status_code=400, detail="Signup failed")
+
+    return {"message": "User created successfully", "user_id": response.user.id}
+
+@router.post("/signin", status_code=status.HTTP_200_OK)
+def signin(user: UserSignIn):
+    response = supabase.auth.sign_in_with_password({
+        "email": user.email,
+        "password": user.password,
+    })
+    if response.user is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
     
+    return {
+        "message": "Login successful",
+        "access_token": response.session.access_token,
+        "user_id": response.user.id
+    }
