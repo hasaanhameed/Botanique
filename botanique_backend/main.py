@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from routes import user
+from routes import user, plant
 
 app = FastAPI(title="Botanique")
 
@@ -14,6 +14,7 @@ app.add_middleware(
 )
 
 app.include_router(user.router)
+app.include_router(plant.router)
 
 @app.get("/healt")
 def health_check():
