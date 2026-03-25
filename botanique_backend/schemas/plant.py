@@ -9,9 +9,6 @@ class PlantBase(BaseModel):
     temperature: str
     season: str
 
-class PlantCreate(PlantBase):
-    pass
-
 class Plant(PlantBase):
     id: str
     user_id: str

@@ -8,3 +8,7 @@ class UserSignUp(BaseModel):
 class UserSignIn(BaseModel):
     email: str
     password: str
+
+class UserUpdatePassword(BaseModel):
+    current_password: str
+    new_password: str
