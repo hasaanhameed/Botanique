@@ -12,9 +12,19 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 PLANTNET_API_URL = "https://my-api.plantnet.org/v2/identify/all"
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
+from services.cache_service import get_cached_plant_details, set_cached_plant_details
+
 async def fetch_plant_details(plant_name: str):
+    # 1. Check Cache First
+    cached_data = get_cached_plant_details(plant_name)
+    if cached_data:
+        print(f"Cache hit for {plant_name}")
+        return cached_data
+
+    # 2. Cache Miss - Call API
+    print(f"Cache miss for {plant_name}, calling Groq...")
     if not GROQ_API_KEY:
-        return None # Fallback to dummy if key missing
+        return None
 
     prompt = f"""
     You are a professional botanist. Provide gardening details for the plant: '{plant_name}'.
@@ -46,17 +56,18 @@ async def fetch_plant_details(plant_name: str):
                 timeout=30.0
             )
             
-            print(f"Groq Response Status: {response.status_code}")
-            
             if response.status_code == 200:
                 result = response.json()
                 content = result['choices'][0]['message']['content'].strip()
                 
-                # Robust JSON extraction
                 if "{" in content:
                     content = content[content.find("{"):content.rfind("}")+1]
                 
-                return json.loads(content)
+                details = json.loads(content)
+                
+                # 3. Save to Cache
+                set_cached_plant_details(plant_name, details)
+                return details
             else:
                 print(f"Groq API Error Detail: {response.text}")
                 return None

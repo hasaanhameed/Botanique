@@ -6,3 +6,4 @@ supabase
 bcrypt
 httpx
 python-multipart
+redis

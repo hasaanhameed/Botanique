@@ -11,3 +11,10 @@ services:
     env_file:
       - ./botanique_backend/.env
     restart: always
+
+  redis:
+    image: redis:alpine
+    container_name: botanique_redis
+    ports:
+      - "6379:6379"
+    restart: always
