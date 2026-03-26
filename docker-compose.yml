@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./botanique_backend
+      dockerfile: Dockerfile
+    container_name: botanique_backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./botanique_backend/.env
+    restart: always
