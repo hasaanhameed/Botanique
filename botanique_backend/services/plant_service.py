@@ -115,8 +115,7 @@ async def identify_plant(image: UploadFile):
             common_name = common_names[0] if common_names else scientific_name
             print(f"Identified as: {common_name} ({scientific_name})")
 
-            # Now fetch real details from Groq
-            print("Fetching details from Groq...")
+            # Fetch plant details (checks cache first)
             details = await fetch_plant_details(common_name)
             
             if not details:
@@ -130,7 +129,7 @@ async def identify_plant(image: UploadFile):
                     "season": "Spring"
                 }
             else:
-                print("Groq details fetched successfully")
+                pass # Details already fetched and logged in fetch_plant_details
 
             return {
                 "name": common_name,

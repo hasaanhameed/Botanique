@@ -20,14 +20,23 @@ async def get_current_user_id(authorization: Optional[str] = Header(None)):
         print(f"Auth error: {e}")
     return None
 
+from services.rate_limit_service import is_rate_limited
+
 @router.post("/identify")
 async def identify(
     image: UploadFile = File(...),
     user_id: Optional[str] = Depends(get_current_user_id)
 ):
+    # Rate limit check: 5 per hour
+    if user_id and is_rate_limited(user_id):
+        raise HTTPException(
+            status_code=429, 
+            detail="Rate limit reached: 5 identifications per hour allowed."
+        )
+
     # Read image content for identification
     content = await image.read()
-    await image.seek(0) # Reset pointer for identify_plant service
+    await image.seek(0)
     
     plant_data = await identify_plant(image)
     
