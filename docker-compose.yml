@@ -1,10 +1,6 @@
-version: '3.8'
-
 services:
   backend:
-    build:
-      context: ./botanique_backend
-      dockerfile: Dockerfile
+    image: ghcr.io/hasaanhameed/botanique-backend:latest
     container_name: botanique_backend
     ports:
       - "8000:8000"
