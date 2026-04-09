@@ -22,87 +22,116 @@ class _WelcomePageState extends State<WelcomePage> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (_isLoaded)
-                  const Text(
-                    'BOTANIQUE',
-                    style: TextStyle(
-                      fontFamily: 'Raleway',
-                      fontSize: 48,
-                      fontWeight: FontWeight.w200,
-                      letterSpacing: 4,
-                      color: Color.fromARGB(255, 225, 249, 226),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (_isLoaded)
+                    const Text(
+                      'BOTANIQUE',
+                      style: TextStyle(
+                        fontFamily: 'Raleway',
+                        fontSize: 38,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 5,
+                        color: Color.fromARGB(255, 225, 249, 226),
+                      ),
                     ),
+
+                  if (_isLoaded) const SizedBox(height: 6),
+
+                  if (_isLoaded)
+                    const Text(
+                      'Your Premium Plant Companion',
+                      style: TextStyle(
+                        fontFamily: 'Raleway',
+                        fontSize: 13,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 1.5,
+                        color: Color.fromARGB(180, 225, 249, 226),
+                      ),
+                    ),
+
+                  if (_isLoaded) const SizedBox(height: 5),
+
+                  Lottie.asset(
+                    'assets/animations/plant.json',
+                    width: 260,
+                    height: 260,
+                    onLoaded: (composition) {
+                      setState(() => _isLoaded = true);
+                    },
                   ),
 
-                if (_isLoaded) const SizedBox(height: 5),
-
-                Lottie.asset(
-                  'assets/animations/plant.json',
-                  width: 280,
-                  height: 280,
-                  onLoaded: (composition) {
-                    setState(() => _isLoaded = true);
-                  },
-                ),
-
-                if (_isLoaded) ...[
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    width: 150,
-                    height: 40,
-                    child: OutlinedButton(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              SignUpPage(authNotifier: widget.authNotifier),
+                  if (_isLoaded) ...[
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                SignUpPage(authNotifier: widget.authNotifier),
+                          ),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: const Color.fromARGB(255, 227, 240, 227),
+                          side: const BorderSide(
+                            color: Color.fromARGB(255, 227, 240, 227),
+                            width: 1.5,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        child: const Text(
+                          'Create Account',
+                          style: TextStyle(
+                            fontFamily: 'Raleway',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: const Color.fromARGB(
-                          255,
-                          227,
-                          249,
-                          227,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text("Create Account"),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    width: 150,
-                    height: 40,
-                    child: OutlinedButton(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              LoginPage(authNotifier: widget.authNotifier),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                LoginPage(authNotifier: widget.authNotifier),
+                          ),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: const Color.fromARGB(255, 227, 240, 227),
+                          side: const BorderSide(
+                            color: Color.fromARGB(255, 227, 240, 227),
+                            width: 1.5,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(
+                            fontFamily: 'Raleway',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: const Color.fromARGB(
-                          255,
-                          227,
-                          249,
-                          227,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text("Login"),
                     ),
-                  ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),

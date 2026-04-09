@@ -147,7 +147,7 @@ class _DashboardPageState extends State<DashboardPage> {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -158,22 +158,32 @@ class _DashboardPageState extends State<DashboardPage> {
                     dashPattern: const [8, 4],
                     borderType: BorderType.RRect,
                     color: cs.primary,
-                    radius: const Radius.circular(10),
+                    radius: const Radius.circular(15),
                     child: SizedBox(
-                      width: 200,
-                      height: 200,
+                      width: double.infinity,
+                      height: 220,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.camera_alt, size: 40, color: cs.primary),
-                          const SizedBox(height: 10),
+                          Icon(Icons.camera_alt, size: 56, color: cs.primary),
+                          const SizedBox(height: 14),
                           Text(
                             'Upload Plant Image',
                             style: TextStyle(
                               fontFamily: 'Raleway',
-                              fontSize: 18,
-                              fontWeight: FontWeight.w300,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
                               color: cs.primary,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'Tap to take a photo or choose from gallery',
+                            style: TextStyle(
+                              fontFamily: 'Raleway',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w300,
+                              color: cs.primary.withOpacity(0.7),
                             ),
                           ),
                         ],
@@ -187,32 +197,36 @@ class _DashboardPageState extends State<DashboardPage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Raleway',
-                    fontSize: 14,
+                    fontSize: 16,
                     color: cs.secondary,
                   ),
                 ),
                 const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => RecentIdentificationsPage(
-                          authNotifier: widget.authNotifier,
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => RecentIdentificationsPage(
+                            authNotifier: widget.authNotifier,
+                          ),
                         ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cs.primary,
+                      foregroundColor: cs.onPrimary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: cs.primary,
-                    foregroundColor: cs.onPrimary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
-                  child: const Text(
-                    'Recent Identifications',
-                    style: TextStyle(fontFamily: 'Raleway', fontSize: 16),
+                    child: const Text(
+                      'Recent Identifications',
+                      style: TextStyle(fontFamily: 'Raleway', fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
               ],

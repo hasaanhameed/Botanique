@@ -75,8 +75,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   'Create Account',
                   style: TextStyle(
                     fontFamily: 'Raleway',
-                    fontSize: 36,
-                    fontWeight: FontWeight.w300,
+                    fontSize: 40,
+                    fontWeight: FontWeight.w400,
                     letterSpacing: 2,
                     color: green,
                   ),
@@ -93,25 +93,38 @@ class _SignUpPageState extends State<SignUpPage> {
                   obscure: true,
                 ),
                 const SizedBox(height: 20),
-                SizedBox(
-                  width: 150,
-                  height: 40,
-                  child: ElevatedButton(
-                    onPressed: _isLoading ? null : _submit,
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: const Color.fromARGB(255, 31, 32, 31),
-                      backgroundColor: const Color.fromARGB(255, 227, 249, 227),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: _isLoading ? null : _submit,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: const Color.fromARGB(255, 31, 32, 31),
+                        backgroundColor: const Color.fromARGB(255, 227, 249, 227),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                       ),
+                      child: _isLoading
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Color.fromARGB(255, 31, 32, 31),
+                              ),
+                            )
+                          : const Text(
+                              'Submit',
+                              style: TextStyle(
+                                fontFamily: 'Raleway',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                     ),
-                    child: _isLoading
-                        ? const SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Text('Submit'),
                   ),
                 ),
               ],
@@ -139,8 +152,17 @@ class _SignUpPageState extends State<SignUpPage> {
           hintText: hint,
           hintStyle: const TextStyle(color: green),
           prefixIcon: Icon(icon, color: green),
+          contentPadding: const EdgeInsets.symmetric(vertical: 20),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: green.withOpacity(0.5)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(color: green, width: 2),
+          ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(15),
             borderSide: const BorderSide(color: green),
           ),
         ),
