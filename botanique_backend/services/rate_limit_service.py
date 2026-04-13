@@ -1,7 +1,7 @@
 from database.redis_client import redis_client
 import time
 
-def is_rate_limited(user_id: str, limit: int = 5, window: int = 3600):
+async def is_rate_limited(user_id: str, limit: int = 5, window: int = 3600):
     """
     Check if a user has exceeded their rate limit.
     Default: 5 identifications per hour (3600 seconds).
@@ -14,11 +14,11 @@ def is_rate_limited(user_id: str, limit: int = 5, window: int = 3600):
     
     try:
         # Increment the counter
-        current_count = redis_client.incr(key)
+        current_count = await redis_client.incr(key)
         
         # If it's the first request in the window, set expiration
         if current_count == 1:
-            redis_client.expire(key, window)
+            await redis_client.expire(key, window)
             
         if current_count > limit:
             return True

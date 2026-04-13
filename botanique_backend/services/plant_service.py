@@ -9,14 +9,15 @@ load_dotenv()
 PLANTNET_API_KEY = os.getenv("PLANTNET_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-PLANTNET_API_URL = "https://my-api.plantnet.org/v2/identify/all"
-GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
+# Use environment variables for URLs with defaults
+PLANTNET_API_URL = os.getenv("PLANTNET_API_URL", "https://my-api.plantnet.org/v2/identify/all")
+GROQ_API_URL = os.getenv("GROQ_API_URL", "https://api.groq.com/openai/v1/chat/completions")
 
 from services.cache_service import get_cached_plant_details, set_cached_plant_details
 
 async def fetch_plant_details(plant_name: str):
     # 1. Check Cache First
-    cached_data = get_cached_plant_details(plant_name)
+    cached_data = await get_cached_plant_details(plant_name)
     if cached_data:
         print(f"Cache hit for {plant_name}")
         return cached_data
@@ -53,7 +54,7 @@ async def fetch_plant_details(plant_name: str):
                     "temperature": 0.1,
                     "response_format": {"type": "json_object"}
                 },
-                timeout=30.0
+                timeout=90.0
             )
             
             if response.status_code == 200:
@@ -66,7 +67,7 @@ async def fetch_plant_details(plant_name: str):
                 details = json.loads(content)
                 
                 # 3. Save to Cache
-                set_cached_plant_details(plant_name, details)
+                await set_cached_plant_details(plant_name, details)
                 return details
             else:
                 print(f"Groq API Error Detail: {response.text}")
@@ -94,7 +95,7 @@ async def identify_plant(image: UploadFile):
                 PLANTNET_API_URL, 
                 params=params, 
                 files=files,
-                timeout=30.0 # Added timeout
+                timeout=60.0 # Increased timeout
             )
             print(f"PlantNet response received: {response.status_code}")
             

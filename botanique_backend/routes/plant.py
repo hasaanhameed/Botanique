@@ -28,7 +28,7 @@ async def identify(
     user_id: Optional[str] = Depends(get_current_user_id)
 ):
     # Rate limit check: 5 per hour
-    if user_id and is_rate_limited(user_id):
+    if user_id and await is_rate_limited(user_id):
         raise HTTPException(
             status_code=429, 
             detail="Rate limit reached: 5 identifications per hour allowed."

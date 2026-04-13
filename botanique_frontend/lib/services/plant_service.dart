@@ -6,7 +6,10 @@ import '../constants/api_constants.dart';
 class PlantService {
   static final String _baseUrl = ApiConstants.baseUrl;
 
-  static Future<Map<String, dynamic>?> identifyPlant(XFile imageFile, {String? authToken}) async {
+  static Future<Map<String, dynamic>?> identifyPlant(
+    XFile imageFile, {
+    String? authToken,
+  }) async {
     print('PlantService: Starting identification for ${imageFile.name}');
     final request = http.MultipartRequest(
       'POST',
@@ -19,21 +22,21 @@ class PlantService {
 
     print('PlantService: Reading bytes from XFile...');
     final bytes = await imageFile.readAsBytes();
-    
+
     print('PlantService: Adding multipart file from bytes...');
     request.files.add(
-      http.MultipartFile.fromBytes(
-        'image',
-        bytes,
-        filename: imageFile.name,
-      ),
+      http.MultipartFile.fromBytes('image', bytes, filename: imageFile.name),
     );
 
     try {
       print('PlantService: Sending request to $_baseUrl/plant/identify ...');
-      final streamedResponse = await request.send().timeout(const Duration(seconds: 40));
-      print('PlantService: Streamed response received: ${streamedResponse.statusCode}');
-      
+      final streamedResponse = await request.send().timeout(
+        const Duration(seconds: 90),
+      );
+      print(
+        'PlantService: Streamed response received: ${streamedResponse.statusCode}',
+      );
+
       final response = await http.Response.fromStream(streamedResponse);
       print('PlantService: Full response received: ${response.body}');
 
