@@ -69,7 +69,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     SizedBox(
                       width: double.infinity,
                       height: 56,
-                      child: ElevatedButton(
+                      child: OutlinedButton(
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -77,9 +77,17 @@ class _WelcomePageState extends State<WelcomePage> {
                                 SignUpPage(authNotifier: widget.authNotifier),
                           ),
                         ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 90, 102, 92),
-                          foregroundColor: const Color.fromARGB(255, 227, 240, 227),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: const Color.fromARGB(
+                            255,
+                            227,
+                            240,
+                            227,
+                          ),
+                          side: const BorderSide(
+                            color: Color.fromARGB(255, 227, 240, 227),
+                            width: 1.5,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
@@ -89,7 +97,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           style: TextStyle(
                             fontFamily: 'Raleway',
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -98,7 +106,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     SizedBox(
                       width: double.infinity,
                       height: 56,
-                      child: ElevatedButton(
+                      child: OutlinedButton(
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -106,9 +114,17 @@ class _WelcomePageState extends State<WelcomePage> {
                                 LoginPage(authNotifier: widget.authNotifier),
                           ),
                         ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 90, 102, 92),
-                          foregroundColor: const Color.fromARGB(255, 227, 240, 227),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: const Color.fromARGB(
+                            255,
+                            227,
+                            240,
+                            227,
+                          ),
+                          side: const BorderSide(
+                            color: Color.fromARGB(255, 227, 240, 227),
+                            width: 1.5,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
@@ -118,7 +134,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           style: TextStyle(
                             fontFamily: 'Raleway',
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
