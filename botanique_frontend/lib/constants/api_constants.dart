@@ -10,8 +10,9 @@ class ApiConstants {
     if (kIsWeb) {
       return 'http://127.0.0.1:8000';
     }
-    return Platform.isAndroid
-        ? 'http://10.7.64.231:8000'
-        : 'http://127.0.0.1:8000';
+    if (Platform.isAndroid) {
+      return 'http://10.0.2.2:8000';
+    }
+    return 'http://127.0.0.1:8000';
   }
 }

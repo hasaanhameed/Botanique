@@ -200,7 +200,7 @@ class _SettingsPageState extends State<SettingsPage> {
               SizedBox(
                 width: double.infinity,
                 height: 45,
-                child: OutlinedButton(
+                child: ElevatedButton(
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -226,9 +226,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     );
                   },
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: cs.primary,
-                    side: BorderSide(color: cs.primary),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: cs.primary,
+                    foregroundColor: cs.onPrimary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
