@@ -386,10 +386,3 @@ botanique/
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ---
-
-## Support
-
-For issues, questions, or suggestions, please open an issue on the GitHub repository or reach out through our contact channels.
-
-**Built with Flutter and FastAPI**
-
