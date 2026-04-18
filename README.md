@@ -57,14 +57,14 @@ Botanique is a full-stack mobile application that leverages AI-powered image rec
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Flutter Frontend                          │
+│                    Flutter Frontend                         │
 │  (Dashboard → Image Selection → Identification Results)     │
 └──────────────────────┬──────────────────────────────────────┘
                        │ HTTP/HTTPS
                        ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   FastAPI Backend                            │
-│  (Authentication, Plant Identification, History)            │
+┌────────────────────────────────────────────────────────────┐
+│                   FastAPI Backend                          │
+│  (Authentication, Plant Identification, History)           │
 └────┬────────────────┬────────────────┬─────────────────────┘
      │                │                │
      ▼                ▼                ▼
